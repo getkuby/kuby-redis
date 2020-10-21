@@ -41,7 +41,7 @@ Kuby.define(:production) do
         # set the version of redis you want to use
         version '5.0.3-v1'  # this is the default version
 
-        # set the port redis listen on and that you'll
+        # set the port redis listens on and that you'll
         # use to connect to the instance
         port 6379  # this is the default port
 
