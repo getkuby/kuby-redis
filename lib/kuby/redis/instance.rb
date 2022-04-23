@@ -3,19 +3,21 @@ require 'kube-dsl'
 module Kuby
   module Redis
     class Instance
+      PORT = 26379
+
       extend ::KubeDSL::ValueFields
 
       attr_reader :name, :environment
 
-      value_field :version, default: '5.0.3-v1'
-      value_field :storage_class_name, default: -> (inst) { inst.kubernetes.provider.storage_class_name }
+      value_field :sentinel_replicas, default: 1
+      value_field :redis_replicas, default: 1
+
+      value_field :storage_access_modes, default: ['ReadWriteOnce']
       value_field :storage_type, default: 'Durable'
       value_field :storage, default: '1Gi'
-      value_field :access_modes, default: ['ReadWriteOnce']
-      value_field :port, default: 6379
 
       def initialize(name, environment)
-        @name = name
+        @name = "#{environment.kubernetes.selector_app}-#{name}"
         @environment = environment
       end
 
@@ -24,45 +26,71 @@ module Kuby
       end
 
       def hostname
-        name
+        @hostname ||= "rfs-#{name}"
       end
 
       def url
-        @url ||= "redis://#{hostname}:#{port}/0"
+        @url ||= "redis://#{hostname}:#{PORT}/0"
       end
 
       def redis(&block)
         context = self
 
-        @redis ||= Kuby::KubeDB.redis do
-          api_version 'kubedb.com/v1alpha1'
+        @redis ||= Kuby::Redis.redis_failover do
+          api_version 'databases.spotahome.com/v1'
 
           metadata do
-            name "#{context.name}-redis"
+            name context.name
             namespace context.kubernetes.namespace.metadata.name
           end
 
           spec do
-            version context.version
-            storage_type context.storage_type
-
-            storage do
-              storage_class_name context.storage_class_name
-              access_modes context.access_modes
+            sentinel do
+              replicas context.sentinel_replicas
 
               resources do
                 requests do
-                  add :storage, context.storage
+                  add :cpu, '100m'
+                end
+
+                limits do
+                  add :memory, '100Mi'
                 end
               end
             end
 
-            service_template do
-              spec do
-                type 'NodePort'
-                port do
-                  name 'memcached'
-                  port context.port
+            redis do
+              replicas context.redis_replicas
+
+              storage do
+                keep_after_deletion true
+
+                persistent_volume_claim do
+                  metadata do
+                    name "#{context.name}-pvc"
+                  end
+
+                  spec do
+                    access_modes context.storage_access_modes
+
+                    resources do
+                      requests do
+                        add :storage, context.storage
+                      end
+                    end
+                  end
+                end
+              end
+
+              resources do
+                requests do
+                  add :cpu, '100m'
+                  add :memory, '100Mi'
+                end
+
+                limits do
+                  add :cpu, '400m'
+                  add :memory, '500Mi'
                 end
               end
             end
