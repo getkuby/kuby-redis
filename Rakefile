@@ -130,7 +130,7 @@ task :codegen do
   # delete anything that should be re-generated
   FileUtils.rm_rf('./lib/kuby/redis/dsl.rb')
   FileUtils.rm_rf('./lib/kuby/redis/dsl')
-  FileUtils.rm('./lib/kuby/redis/entrypoint.rb')
+  FileUtils.rm_rf('./lib/kuby/redis/entrypoint.rb')
   FileUtils.rm_rf('./sorbet/rbi/kuby/redis')
   FileUtils.mkdir_p('./lib/kuby/redis/dsl')
 

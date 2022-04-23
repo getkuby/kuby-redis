@@ -33,6 +33,10 @@ module Kuby
         @url ||= "redis://#{hostname}:#{PORT}/0"
       end
 
+      def custom_config(*args)
+        redis.spec.redis.custom_config(*args)
+      end
+
       def redis(&block)
         context = self
 

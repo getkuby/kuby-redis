@@ -20,7 +20,7 @@ module Kuby
             validates :seccomp_profile, object: { kind_of: Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisSecurityContextSeccompProfile }
             validates :run_as_group, field: { format: :integer }, presence: true
             validates :run_as_user, field: { format: :integer }, presence: true
-            validates :supplemental_groups, field: { format: :string }, presence: false
+            validates :supplemental_groups, field: { format: :integer }, presence: false
             validates :fs_group, field: { format: :integer }, presence: true
             validates :sysctls, array: { kind_of: Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisSecurityContextSysctls }, presence: false
             validates :run_as_non_root, field: { format: :boolean }, presence: true

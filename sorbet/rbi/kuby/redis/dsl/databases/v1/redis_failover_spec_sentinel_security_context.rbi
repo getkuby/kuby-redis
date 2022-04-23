@@ -25,7 +25,7 @@ module Kuby
             T::Sig::WithoutRuntime.sig { params(val: T.nilable(Integer)).returns(Integer) }
             def run_as_user(val = nil); end
 
-            T::Sig::WithoutRuntime.sig { params(val: T.nilable(String)).returns(String) }
+            T::Sig::WithoutRuntime.sig { params(val: T.nilable(Integer)).returns(Integer) }
             def supplemental_groups(val = nil); end
 
             T::Sig::WithoutRuntime.sig { params(val: T.nilable(Integer)).returns(Integer) }
