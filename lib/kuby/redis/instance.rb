@@ -25,12 +25,12 @@ module Kuby
         @resources ||= [redis]
       end
 
-      def hostname
-        @hostname ||= "rfs-#{name}"
+      def service_name
+        @service_name ||= "rfs-#{name}"
       end
 
-      def url
-        @url ||= "redis://#{hostname}:#{PORT}/0"
+      def service_port
+        PORT
       end
 
       def custom_config(*args)
