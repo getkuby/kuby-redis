@@ -43,7 +43,7 @@ The kuby-redis plugin supports a number of additional configuration options:
 * `storage_access_modes`, (default: `['ReadWriteOnce']`). An array of Kubernetes [storage access modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) for the persistent volume that the Redis instance will use to persist data.
 * `storage`, (default: `'1Gi'`). The amount of persistent storage to request. Note that this is not a Redis memory limit, but rather a request for an amount of persistent (i.e. disk-based) storage Redis will write to. Persistent storage is necessary to prevent data loss if/when an individual Redis instance fails.
 
-**NOTE**: All memory amounts must be strings parseable by Go's [go-units module](https://pkg.go.dev/github.com/docker/go-units#example-FromHumanSize). Valid examples include '100Mi' (100 megabytes) and '2Gb' (2 gigabytes).
+**NOTE**: All memory amounts must be strings parseable by Go's [go-units module](https://pkg.go.dev/github.com/docker/go-units#example-FromHumanSize). Valid examples include '100Mi' (100 megabytes) and '2Gi' (2 gigabytes).
 
 Example:
 
