@@ -87,7 +87,7 @@ config.cache_store = :redis_cache_store, redis_instance.connection_params
 
 ### Redis Gem
 
-You can also use a redis client like the [Redis gem](https://github.com/redis/redis-rb) directly:
+You can also use the [redis-rb gem](https://github.com/redis/redis-rb) directly:
 
 ```ruby
 # make sure Kuby config is loaded
