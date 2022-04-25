@@ -9,12 +9,16 @@ module Kuby
 
       attr_reader :name, :environment
 
+      value_field :cpu_request, default: '100m'.freeze
+      value_field :memory_request, default: '100Mi'.freeze
+      value_field :cpu_limit, default: '400m'.freeze
+      value_field :memory_limit, default: '500Mi'
+
       value_field :sentinel_replicas, default: 1
       value_field :redis_replicas, default: 1
 
-      value_field :storage_access_modes, default: ['ReadWriteOnce']
-      value_field :storage_type, default: 'Durable'
-      value_field :storage, default: '1Gi'
+      value_field :storage_access_modes, default: ['ReadWriteOnce'.freeze].freeze
+      value_field :storage, default: '1Gi'.freeze
 
       def initialize(name, environment)
         @name = "#{environment.kubernetes.selector_app}-#{name}"
@@ -31,6 +35,16 @@ module Kuby
 
       def service_port
         PORT
+      end
+
+      # https://github.com/spotahome/redis-operator#connection-to-the-created-redis-failovers
+      # The return value of this method is suitable for passing into `Redis.new` from the
+      # redis-rb gem.
+      def connection_params
+        {
+          sentinels: [{ host: service_name, port: service_port }],
+          url: 'redis://mymaster'
+        }
       end
 
       def custom_config(*args)
@@ -88,13 +102,13 @@ module Kuby
 
               resources do
                 requests do
-                  add :cpu, '100m'
-                  add :memory, '100Mi'
+                  add :cpu, context.cpu_request
+                  add :memory, context.memory_request
                 end
 
                 limits do
-                  add :cpu, '400m'
-                  add :memory, '500Mi'
+                  add :cpu, context.cpu_limit
+                  add :memory, context.memory_limit
                 end
               end
             end
