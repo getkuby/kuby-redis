@@ -2,7 +2,7 @@
 
 ## kuby-redis
 
-Redis plugin for [Kuby](https://github.com/getkuby/kuby-core).
+Redis plugin for [Kuby](https://github.com/getkuby/kuby-core). If you're looking for an easy way to add Sidekiq to your app, check out [kuby-sidekiq](https://github.com/getkuby/kuby-sidekiq).
 
 ## Intro
 
