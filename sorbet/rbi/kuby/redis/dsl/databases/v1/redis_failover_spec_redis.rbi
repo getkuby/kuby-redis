@@ -6,6 +6,10 @@ module Kuby
       module Databases
         module V1
           class RedisFailoverSpecRedis < ::KubeDSL::DSLObject
+            extend KubeDSL::ValueFields::ClassMethods
+            extend KubeDSL::Validations::ClassMethods
+            include KubeDSL::ValueFields::InstanceMethods
+
             T::Sig::WithoutRuntime.sig {
               returns(
                 T::Hash[Symbol, T.any(String, Integer, Float, T::Boolean, T::Array[T.untyped], T::Hash[Symbol, T.untyped])]
@@ -30,6 +34,9 @@ module Kuby
 
             T::Sig::WithoutRuntime.sig { returns(Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisExporter) }
             def exporter; end
+            
+            T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
+            def exporter_present?; end
 
             T::Sig::WithoutRuntime.sig { params(block: T.nilable(T.proc.void)).returns(::KubeDSL::KeyValueFields) }
             def node_selector(&block); end
@@ -39,9 +46,15 @@ module Kuby
 
             T::Sig::WithoutRuntime.sig { returns(Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisSecurityContext) }
             def security_context; end
+            
+            T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
+            def security_context_present?; end
 
             T::Sig::WithoutRuntime.sig { returns(Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisStorage) }
             def storage; end
+            
+            T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
+            def storage_present?; end
 
             T::Sig::WithoutRuntime.sig {
               params(
@@ -56,6 +69,9 @@ module Kuby
 
             T::Sig::WithoutRuntime.sig { returns(Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisAffinity) }
             def affinity; end
+            
+            T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
+            def affinity_present?; end
 
             T::Sig::WithoutRuntime.sig {
               params(
@@ -67,6 +83,9 @@ module Kuby
 
             T::Sig::WithoutRuntime.sig { returns(Kuby::Redis::DSL::Databases::V1::RedisFailoverSpecRedisResources) }
             def resources; end
+            
+            T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
+            def resources_present?; end
 
             T::Sig::WithoutRuntime.sig { params(val: T.nilable(String)).returns(String) }
             def shutdown_config_map(val = nil); end

@@ -2,10 +2,8 @@ require 'bundler'
 require 'rspec/core/rake_task'
 require 'rubygems/package_task'
 
-# TODO: remove me
-require 'sorbet-runtime'
 require 'pry-byebug'
-
+require 'sorbet-runtime'
 require 'kuby/redis'
 
 Bundler::GemHelper.install_tasks

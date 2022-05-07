@@ -4,6 +4,9 @@ require 'helm-cli'
 module Kuby
   module Redis
     class Plugin < ::Kuby::Plugin
+      class KubyRedisError < StandardError; end
+      class APIResourcesError < KubyRedisError; end
+
       REPO_NAME = 'redis-operator'.freeze
       REPO_URL = 'https://spotahome.github.io/redis-operator'.freeze
 

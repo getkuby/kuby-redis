@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
+  s.add_dependency 'kuby-core', '>= 0.16.0', '< 1.0'
   s.add_dependency 'kube-dsl', '~> 0.7'
   s.add_dependency 'helm-cli', '~> 0.3'
 

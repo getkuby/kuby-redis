@@ -3,15 +3,12 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'kuby-core', path: '../kuby-core'
-gem 'kube-dsl', path: '../kube-dsl'
-gem 'kuby-crdb', path: '../kuby-crdb'
-gem 'kuby-kind', path: '../kuby-kind'
-gem 'helm-cli', path: '../helm-cli'
-
-# TODO: remove me
-gem 'sorbet-runtime'
 
 group :development, :test do
+  gem 'sorbet'
+  gem 'sorbet-runtime'
+  gem 'tapioca', '~> 0.7'
+  gem 'parlour', github: 'camertron/parlour', branch: 'initialize_void'
   gem 'pry-byebug'
   gem 'rake'
 end
